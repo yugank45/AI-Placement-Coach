@@ -1,12 +1,12 @@
 {
   "name": "ai-placement-coach-api",
   "version": "1.0.0",
-  "description": "RESTful API for AI Placement Coach — handles auth, profiles, skills, resume analysis, mock interviews, job tracking, and progress data.",
+  "description": "RESTful API for AI Placement Coach \u2014 handles auth, profiles, skills, resume analysis, mock interviews, job tracking, and progress data.",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "dev": "node init && tsx watch src/index.ts",
+    "build": "node init && tsc",
+    "start": "node init && node dist/index.js",
     "test": "jest --config jest.config.js --forceExit",
     "test:coverage": "jest --config jest.config.js --coverage --forceExit",
     "db:push": "drizzle-kit push",
