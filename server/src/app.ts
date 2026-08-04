@@ -1,3 +1,5 @@
+import path from "path";
+import fs from "fs";
 import 'dotenv/config';
 import express from 'express';
 import helmet from 'helmet';
@@ -71,6 +73,26 @@ export function createApp() {
 
   // ─── API routes ───────────────────────────────────────────────────────────
   app.use('/api', apiRoutes);
+
+  // ─── Serve React Frontend ────────────────────────────────────────────────
+const publicDir = path.join(process.cwd(), "public");
+
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+
+  app.get("*", (req, res, next) => {
+    // Let API routes continue normally
+    if (
+      req.path.startsWith("/api") ||
+      req.path.startsWith("/health") ||
+      req.path.startsWith("/api-docs")
+    ) {
+      return next();
+    }
+
+    res.sendFile(path.join(publicDir, "index.html"));
+  });
+}
 
   // ─── 404 ──────────────────────────────────────────────────────────────────
   app.use((_req, res) => {
